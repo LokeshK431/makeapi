@@ -1,6 +1,8 @@
+from django import views
 from django.urls import path
 from django.contrib import admin
-from restapi import views as restapi_views
+import sys
+sys.path.append("...restfulapi/views.py")
 from rest_framework import routers
 
 
@@ -10,5 +12,5 @@ urlpatterns = router.urls
 
 urlpatterns += [
     path('admin/', admin.site.urls),
-    path('contact/', restapi_views.ContactAPIView.as_view()),
+    
 ]

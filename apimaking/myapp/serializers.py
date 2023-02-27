@@ -1,6 +1,5 @@
-from django.contrib import admin
 from collections import OrderedDict
-from .models import Item , Order
+from models import Item , Order
 from rest_framework_json_api import serializers
 from rest_framework import status
 from rest_framework.exceptions import APIException

@@ -13,9 +13,41 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
 
-urlpatterns = [
+from django import views
+from django.urls import path
+from django.contrib import admin
+import sys
+sys.path.append("/apimaking/restapi/restfulapi/views.py")
+from rest_framework import routers
+from rest_framework.authtoken.views import obtain_auth_token
+
+router = routers.DefaultRouter()
+
+urlpatterns = router.urls
+
+urlpatterns += [
     path('admin/', admin.site.urls),
+    
+    path('api-token-auth/', obtain_auth_token), #gives us access to token auth
+]
+
+from django.urls import path
+from django.contrib import admin
+from restapi import views as restapi_views
+from myapp import views as myapp_views
+from rest_framework import routers
+from rest_framework.authtoken.views import obtain_auth_token
+
+
+router = routers.DefaultRouter()
+router.register(r'item', myapp_views.ItemViewSet, basename='item')
+router.register(r'order', myapp_views.OrderViewSet, basename='order')
+
+urlpatterns = router.urls
+
+urlpatterns += [
+    path('admin/', admin.site.urls),
+    path('contact/', restapi_views.ContactAPIView.as_view()),
+    path('api-token-auth/', obtain_auth_token),
 ]
